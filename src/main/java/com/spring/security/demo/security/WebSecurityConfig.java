@@ -36,6 +36,7 @@ public class WebSecurityConfig {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.authorizeRequests().antMatchers("/api/v1/auth/login", "/api/v1/auth/refresh-token").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/users").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.PUT,"/api/v1/users/update-role/**").hasRole("ADMIN");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(tokenUtility()), UsernamePasswordAuthenticationFilter.class);
