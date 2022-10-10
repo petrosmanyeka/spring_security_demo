@@ -38,6 +38,7 @@ public class WebSecurityConfig {
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/v1/users").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.PUT,"/api/v1/users/disable-account/**").hasRole("ADMIN");
         http.authorizeRequests().antMatchers(HttpMethod.PUT,"/api/v1/users/update-role/**").hasAnyRole("ADMIN","EXECUTIVE]");
+        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/v1/users/me").hasAnyRole("ADMIN","USER","EXECUTIVE");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(tokenUtility()), UsernamePasswordAuthenticationFilter.class);
